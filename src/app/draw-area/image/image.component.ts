@@ -39,7 +39,7 @@ export class ImageComponent implements OnInit {
       console.log(coords[i][0]);
       console.log(coords[i][1]);
     }
-    path.setAttribute("d","M150 0 L75 200 L225 200 Z");
+    path.setAttribute('d', 'M150 0 L75 200 L225 200 Z');
     this.append(path);
   }
 
@@ -49,5 +49,23 @@ export class ImageComponent implements OnInit {
 
   append(element: Element) {
     this.getImage().appendChild(element);
+  }
+
+  getElementAt(coords: number[]): HTMLElement {
+    const element = <HTMLElement>document.elementFromPoint(coords[0], coords[1]);
+    if (this.isPartOfImage(element)) {
+      return element;
+    }
+    return null;
+  }
+
+  isPartOfImage(element: Element) {
+    const children = this.getImage().children;
+    for (let i = 0; i < children.length; i++) {
+      if (children[i].tagName === element.tagName) {
+        return true;
+      }
+    }
+    return false;
   }
 }
