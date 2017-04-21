@@ -1,0 +1,7 @@
+<p>Move :</p>
+<button (click)="this.selectedTool='translate'">Translate</button>
+<button (click)="this.selectedTool='rotate'">Rotate</button>
+<p>Draw :</p>
+<button (click)="this.selectedTool='drawLine'">Line</button>
+<label>Thickness</label>
+<input [(ngModel)]="this.lineProperties.thickness" />

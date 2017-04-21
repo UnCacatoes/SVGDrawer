@@ -1,4 +1,5 @@
 import { ImageComponent } from './image/image.component';
+import { ToolsBoxComponent } from './tools-box/tools-box.component';
 import { Component, OnInit, ViewChild, AfterContentInit, HostListener, EventEmitter } from '@angular/core';
 
 @Component({
@@ -7,24 +8,25 @@ import { Component, OnInit, ViewChild, AfterContentInit, HostListener, EventEmit
   styleUrls: ['./draw-area.component.css']
 })
 export class DrawAreaComponent implements OnInit {
-  coeffs: any;
 
+  public coords = [0, 0];
   private mouseUp = new EventEmitter<MouseEvent>();
   private mouseDown = new EventEmitter<MouseEvent>();
   private MouseMove = new EventEmitter<MouseEvent>();
   private isMouseDown = false;
   private lastMouseEvent = '';
-  public coords = [0, 0];
   private x1: number;
   private y1: number;
   private x2: number;
   private y2: number;
-  private selectedTool = 'move';
-  private selectedElement: HTMLElement = null;
+  private coeffs: any;
+  private selectedElement = null;
 
   @ViewChild(ImageComponent)
   private image: ImageComponent;
 
+  @ViewChild(ToolsBoxComponent)
+  private toolsBox: ToolsBoxComponent;
 
   constructor() { }
 
@@ -44,6 +46,8 @@ export class DrawAreaComponent implements OnInit {
     this.lastMouseEvent = 'mouseMove';
     if (this.isMouseDown) {
       this.actions(event);
+    } else {
+      this.updateCoords(event);
     }
   }
 
@@ -60,14 +64,23 @@ export class DrawAreaComponent implements OnInit {
 
   actions(event: MouseEvent) {
     this.updateCoords(event);
-    switch (this.selectedTool) {
-      case 'move': this.moveAction();
+    switch (this.toolsBox.getSelectedTool()) {
+      case 'translate':
+        this.translateAction();
+        break;
+      case 'rotate':
+        this.rotateAction();
+        break;
+      case 'drawLine':
+        this.drawLine();
         break;
     }
   }
 
-  moveAction() {
-
+  translateAction() {
+    if (this.image.getElementAt(this.coords) === null) {
+      return;
+    }
     switch (this.lastMouseEvent) {
 
       case 'mouseDown':
@@ -108,5 +121,34 @@ export class DrawAreaComponent implements OnInit {
 
   }
 
+  rotateAction() {
+    // TODO
+  }
 
+  drawLine() {
+
+    switch (this.lastMouseEvent) {
+
+      case 'mouseDown':
+        this.selectedElement = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        this.selectedElement.setAttribute('x1', this.coords[0].toString());
+        this.selectedElement.setAttribute('y1', this.coords[1].toString());
+        this.selectedElement.setAttribute('x2', this.coords[0].toString());
+        this.selectedElement.setAttribute('y2', this.coords[1].toString());
+        this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
+        this.selectedElement.setAttribute('stroke', 'black');
+        this.image.append(this.selectedElement);
+
+        break;
+
+      case 'mouseMove':
+        this.selectedElement.setAttribute('x2', this.coords[0].toString());
+        this.selectedElement.setAttribute('y2', this.coords[1].toString());
+        break;
+
+      case 'mouseUp':
+        break;
+    }
+
+  }
 }
