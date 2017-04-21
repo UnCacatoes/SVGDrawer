@@ -39,6 +39,8 @@ export class ImageComponent implements OnInit {
       console.log(coords[i][0]);
       console.log(coords[i][1]);
     }
+    path.setAttribute("d","M150 0 L75 200 L225 200 Z");
+    this.append(path);
   }
 
   getImage() {

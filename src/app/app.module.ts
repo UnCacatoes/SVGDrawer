@@ -4,13 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { ImageService } from './image/image.service';
-import { ImageComponent } from './image/image.component';
+import { ImageService } from './draw-area/image/image.service';
+import { ImageComponent } from './draw-area/image/image.component';
+import { DrawAreaComponent } from './draw-area/draw-area.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ImageComponent
+    ImageComponent,
+    DrawAreaComponent
   ],
   imports: [
     BrowserModule,
