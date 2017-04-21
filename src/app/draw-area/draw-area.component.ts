@@ -147,6 +147,7 @@ export class DrawAreaComponent implements OnInit {
         break;
 
       case 'mouseUp':
+        this.selectedElement = null;
         break;
     }
 
