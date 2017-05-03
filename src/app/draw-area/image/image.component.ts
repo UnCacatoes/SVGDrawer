@@ -1,29 +1,21 @@
 import { ImageService } from './image.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-image',
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.css']
 })
-export class ImageComponent implements OnInit {
+export class ImageComponent {
 
   loadingImage = '<h1>Loading image</h1>';
-  image: Element;
+  @ViewChild('image') image; 
 
   constructor(private imageService: ImageService) {
   }
 
-  ngOnInit() {
-    this.imageService.get().then(
-      res => {
-        this.loadingImage = res.text();
-        document.getElementById('imageContainer').innerHTML = this.loadingImage;
-      });
-  }
-
   getImage() {
-    return document.getElementsByTagName('svg')[0];
+    return this.image.nativeElement;
   }
 
   append(element: Element) {

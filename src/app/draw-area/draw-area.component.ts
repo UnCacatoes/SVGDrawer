@@ -11,9 +11,6 @@ export class DrawAreaComponent implements OnInit {
 
   public cursorOnImage = false;
   public coords = [0, 0];
-  private mouseUp = new EventEmitter<MouseEvent>();
-  private mouseDown = new EventEmitter<MouseEvent>();
-  private MouseMove = new EventEmitter<MouseEvent>();
   private isMouseDown = false;
   private lastMouseEvent = '';
   private x1: number;
@@ -33,7 +30,6 @@ export class DrawAreaComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.MouseMove.subscribe();
   }
 
   @HostListener('mouseup', ['$event'])
@@ -46,15 +42,16 @@ export class DrawAreaComponent implements OnInit {
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent) {
     this.lastMouseEvent = 'mouseMove';
+    this.updateCoords(event);
     if (this.isMouseDown) {
       this.actions(event);
     } else {
-      this.updateCoords(event);
+      
     }
   }
 
   @HostListener('mousedown', ['$event'])
-  mouseHandling(event) {
+  onMouseDown(event) {
     this.lastMouseEvent = 'mouseDown';
     this.isMouseDown = true;
     this.actions(event);
@@ -65,7 +62,6 @@ export class DrawAreaComponent implements OnInit {
   }
 
   actions(event: MouseEvent) {
-    this.updateCoords(event);
     if (this.isCursorOnImage(event)) {
       switch (this.toolsBox.getSelectedTool()) {
         case 'translate':
@@ -231,4 +227,19 @@ export class DrawAreaComponent implements OnInit {
         break;
     }
   }
+
+  download() {
+    var pom = document.createElement('a');
+    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.image.getImage().outerHTML));
+    pom.setAttribute('download', "svg.svg");
+
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
+}
 }
