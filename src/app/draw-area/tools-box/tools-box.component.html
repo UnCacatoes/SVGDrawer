@@ -5,3 +5,7 @@
 <button (click)="this.selectedTool='drawLine'">Line</button>
 <label>Thickness</label>
 <input [(ngModel)]="this.lineProperties.thickness" />
+<button (click)="this.selectedTool='drawCircle'">Circle</button>
+<button (click)="this.selectedTool='delete'">Delete</button>
+<br/>
+<input id="html5colorpicker" class="colorfield regular-text" type="text" data-hex="true" value="#ff0000" name="html5colorpicker" (change)="clickColor()">

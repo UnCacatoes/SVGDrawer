@@ -9,6 +9,7 @@ import { Component, OnInit, ViewChild, AfterContentInit, HostListener, EventEmit
 })
 export class DrawAreaComponent implements OnInit {
 
+  public cursorOnImage = false;
   public coords = [0, 0];
   private mouseUp = new EventEmitter<MouseEvent>();
   private mouseDown = new EventEmitter<MouseEvent>();
@@ -20,6 +21,7 @@ export class DrawAreaComponent implements OnInit {
   private x2: number;
   private y2: number;
   private coeffs: any;
+  private oldValue;
   private selectedElement = null;
 
   @ViewChild(ImageComponent)
@@ -64,19 +66,30 @@ export class DrawAreaComponent implements OnInit {
 
   actions(event: MouseEvent) {
     this.updateCoords(event);
-    switch (this.toolsBox.getSelectedTool()) {
-      case 'translate':
-        this.translateAction();
-        break;
-      case 'rotate':
-        this.rotateAction();
-        break;
-      case 'drawLine':
-        this.drawLine();
-        break;
+    if (this.isCursorOnImage(event)) {
+      switch (this.toolsBox.getSelectedTool()) {
+        case 'translate':
+          this.translateAction();
+          break;
+        case 'rotate':
+          this.rotateAction();
+          break;
+        case 'drawLine':
+          this.drawLineAction();
+          break;
+        case 'drawCircle':
+          this.drawCircleAction();
+          break;
+        case 'delete':
+          this.deleteAction();
+          break;
+      }
     }
   }
 
+  isCursorOnImage(event: MouseEvent) {
+    return this.cursorOnImage;
+  }
   translateAction() {
     if (this.image.getElementAt(this.coords) === null) {
       return;
@@ -122,10 +135,35 @@ export class DrawAreaComponent implements OnInit {
   }
 
   rotateAction() {
-    // TODO
+
+    switch (this.lastMouseEvent) {
+
+      case 'mouseDown':
+        this.selectedElement = this.image.getElementAt(this.coords);
+        if (!(this.selectedElement.getAttribute('transform') == null)) {
+          this.oldValue = this.selectedElement.getAttribute('transform');
+        } else {
+          this.oldValue = '';
+        }
+        this.x1 = this.coords[0];
+        this.y1 = this.coords[1];
+        break;
+
+      case 'mouseMove':
+        this.x2 = this.coords[0];
+        this.y2 = this.coords[1];
+        const value = Math.sqrt(Math.pow(this.x2 - this.x1, 2) + Math.pow(this.y2 - this.y1, 2));
+        const rotate = this.oldValue + 'rotate(' + value + ' ' + this.x1 + ' ' + this.y1 + ' )';
+        this.selectedElement.setAttribute('transform', rotate);
+        break;
+
+      case 'mouseUp':
+        this.selectedElement = null;
+        break;
+    }
   }
 
-  drawLine() {
+  drawLineAction() {
 
     switch (this.lastMouseEvent) {
 
@@ -151,5 +189,46 @@ export class DrawAreaComponent implements OnInit {
         break;
     }
 
+  }
+
+  drawCircleAction() {
+
+    switch (this.lastMouseEvent) {
+
+      case 'mouseDown':
+        this.selectedElement = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        this.x1 = this.coords[0];
+        this.y1 = this.coords[1];
+        this.selectedElement.setAttribute('cx', this.x1.toString());
+        this.selectedElement.setAttribute('cy', this.y1.toString());
+        this.selectedElement.setAttribute('r', '0');
+        this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
+        this.selectedElement.setAttribute('stroke', 'black');
+        this.image.append(this.selectedElement);
+
+        break;
+
+      case 'mouseMove':
+        this.x2 = this.coords[0];
+        this.y2 = this.coords[1];
+        const radius = Math.sqrt(Math.pow(this.x2 - this.x1, 2) + Math.pow(this.y2 - this.y1, 2));
+        this.selectedElement.setAttribute('r', radius.toString());
+        break;
+
+      case 'mouseUp':
+        this.selectedElement = null;
+        break;
+    }
+
+  }
+
+  deleteAction() {
+
+    switch (this.lastMouseEvent) {
+      case 'mouseDown':
+        const element = this.image.getElementAt(this.coords);
+        element.outerHTML = '';
+        break;
+    }
   }
 }

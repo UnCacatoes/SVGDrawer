@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class ToolsBoxComponent implements OnInit {
 
   private selectedTool: string;
-  private lineProperties: { thickness: string };
+  public lineProperties: { thickness: string };
+  public color;
 
   constructor() { }
 
@@ -18,7 +19,6 @@ export class ToolsBoxComponent implements OnInit {
   }
 
   getSelectedTool() {
-    console.log(this.lineProperties.thickness);
     return this.selectedTool;
   }
 
@@ -26,4 +26,8 @@ export class ToolsBoxComponent implements OnInit {
     return this.lineProperties;
   }
 
+  clickColor(colorPicker) {
+    this.color = (<HTMLInputElement> document.getElementById('html5colorpicker')).value;
+    console.log(this.color.value);
+  }
 }
