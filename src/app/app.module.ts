@@ -8,13 +8,15 @@ import { ImageService } from './draw-area/image/image.service';
 import { ImageComponent } from './draw-area/image/image.component';
 import { DrawAreaComponent } from './draw-area/draw-area.component';
 import { ToolsBoxComponent } from './draw-area/tools-box/tools-box.component';
+import { MenuBarComponent } from './draw-area/menu-bar/menu-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ImageComponent,
     DrawAreaComponent,
-    ToolsBoxComponent
+    ToolsBoxComponent,
+    MenuBarComponent
   ],
   imports: [
     BrowserModule,
