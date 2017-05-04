@@ -9,13 +9,12 @@ import { Component, ViewChild } from '@angular/core';
 export class ImageComponent {
 
   loadingImage = '<h1>Loading image</h1>';
-  @ViewChild('image') image; 
 
   constructor(private imageService: ImageService) {
   }
 
   getImage() : SVGElement{
-    return this.image.nativeElement;
+    return <SVGElement>document.getElementsByTagName('svg')[0];
   }
 
   append (element: Element){

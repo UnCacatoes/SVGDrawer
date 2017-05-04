@@ -19,11 +19,17 @@
           <ul class="dropdown-menu">
              <li><a href="#" (click)="newImage()">New</a></li>
              <li><a href="#" (click)="open()">Open</a></li>
-             <input type="file" id="openFile" style="display:none">
+             <input type="file" id="openFile" style="display:none" (change)="handleFileSelect($event)">
             <li><a href="#" (click)="save()">Save</a></li>
+            <li><a href="#" (click)="saveAsPng()">Save as PNG</a></li>
           </ul>
         </li>
       </ul>
+      <form class="navbar-form navbar-right">
+        <div class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="name" placeholder="Name" name="name">
+        </div>
+      </form>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

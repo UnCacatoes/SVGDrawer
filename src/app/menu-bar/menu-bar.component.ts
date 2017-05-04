@@ -12,6 +12,7 @@ export class MenuBarComponent implements OnInit {
   private selectedTool: string;
   public lineProperties: { thickness: string };
   public color;
+  public name: String = 'Untitled.svg';
 
   @ViewChild(DrawAreaComponent)
   private drawArea: DrawAreaComponent;
@@ -23,6 +24,7 @@ export class MenuBarComponent implements OnInit {
 
   newImage(){
     this.drawArea.newImage();
+    this.name = 'Untitled.svg';
   }
 
   save(){
@@ -43,18 +45,37 @@ export class MenuBarComponent implements OnInit {
 
    open() {
        document.getElementById("openFile").click();
-       document.getElementById('openFile').addEventListener('change', this.handleFileSelect, false);
     }
 
     handleFileSelect(event) {
       var reader = new FileReader();
       let file = event.target.files[0];
       reader.readAsText(file);
+      this.name = file.name;
 
       reader.onload = function(event)
         {
-            document.getElementById('imageContainer').innerHTML = reader.result;             
+            document.getElementById('imageContainer').innerHTML = reader.result;       
             
         };
+    }
+
+    saveAsPng() {
+        let image = new Image();
+        image.src = 'data:image/svg+xml;base64,' + window.btoa(this.drawArea.getImageComponent().getImage().outerHTML);
+        console.log(this.drawArea.getImageComponent().getImage().innerHTML);
+        image.onload = function() {
+            var canvas = document.createElement('canvas');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            var context = canvas.getContext('2d');
+            context.drawImage(image, 0, 0);
+          
+            var a = document.createElement('a');
+            a.download = "image.png";
+            a.href = canvas.toDataURL('image/png');
+            document.body.appendChild(a);
+            a.click();
+        }
     }
 }
