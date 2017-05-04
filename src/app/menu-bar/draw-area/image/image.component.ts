@@ -43,4 +43,5 @@ export class ImageComponent {
   newImage(){
     this.getImage().innerHTML="";
   }
+
 }

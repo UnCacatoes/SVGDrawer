@@ -40,4 +40,21 @@ export class MenuBarComponent implements OnInit {
         pom.click();
     }
   }
+
+   open() {
+       document.getElementById("openFile").click();
+       document.getElementById('openFile').addEventListener('change', this.handleFileSelect, false);
+    }
+
+    handleFileSelect(event) {
+      var reader = new FileReader();
+      let file = event.target.files[0];
+      reader.readAsText(file);
+
+      reader.onload = function(event)
+        {
+            document.getElementById('imageContainer').innerHTML = reader.result;             
+            
+        };
+    }
 }
