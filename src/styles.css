@@ -11,9 +11,12 @@ body {
 }
 
 #imageContainer {
-	height: 50%;
+	height: 50em;
     width: auto;
     background-image: url("/assets/grid.png");
+    border-color: cadetblue;
+    border-radius: 5px;
+    border-style: solid;
 }
 
 svg {

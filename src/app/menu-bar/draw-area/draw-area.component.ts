@@ -64,7 +64,7 @@ export class DrawAreaComponent implements OnInit {
   actions(event: MouseEvent) {
     if (this.isCursorOnImage(event)) {
       switch (this.toolsBox.getSelectedTool()) {
-        case 'translate':
+          case 'translate':
           this.translateAction();
           break;
         case 'rotate':
@@ -75,6 +75,24 @@ export class DrawAreaComponent implements OnInit {
           break;
         case 'drawCircle':
           this.drawCircleAction();
+          break;
+          case 'drawEllipse':
+          this.drawEllipseAction();
+          break;
+          case 'drawRect':
+          this.drawRectAction();
+          break;
+          case 'drawPath':
+          this.drawPathAction();
+          break;
+          case 'drawPolygon':
+          this.drawPolygonAction();
+          break;
+          case 'drawPolyline':
+          this.drawPolylineAction();
+          break;
+          case 'drawText':
+          this.drawTextAction();
           break;
         case 'delete':
           this.deleteAction();
@@ -217,6 +235,202 @@ export class DrawAreaComponent implements OnInit {
     }
 
   }
+  drawEllipseAction() {
+
+    switch (this.lastMouseEvent) {
+
+      case 'mouseDown':
+        this.selectedElement = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        this.x1 = this.coords[0];
+        this.y1 = this.coords[1];
+        this.selectedElement.setAttribute('cx', this.x1.toString());
+        this.selectedElement.setAttribute('cy', this.y1.toString());
+        this.selectedElement.setAttribute('rx', '0');
+        this.selectedElement.setAttribute('ry', '0');
+        this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
+        this.selectedElement.setAttribute('stroke', 'black');
+        this.image.append(this.selectedElement);
+
+        break;
+
+      case 'mouseMove':
+        this.x2 = this.coords[0];
+        this.y2 = this.coords[1];
+        const rx = this.x2 - this.x1;
+        const ry = this.y2 - this.y1;
+        this.selectedElement.setAttribute('rx', rx.toString());
+        this.selectedElement.setAttribute('ry', ry.toString());
+        break;
+
+      case 'mouseUp':
+        this.selectedElement = null;
+        break;
+    }
+  }
+
+  drawRectAction() {
+
+    switch (this.lastMouseEvent) {
+
+      case 'mouseDown':
+        this.selectedElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        this.x1 = this.coords[0];
+        this.y1 = this.coords[1];
+        this.selectedElement.setAttribute('x', this.x1.toString());
+        this.selectedElement.setAttribute('y', this.y1.toString());
+        this.selectedElement.setAttribute('width', '0');
+        this.selectedElement.setAttribute('height', '0');
+        this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
+        this.selectedElement.setAttribute('stroke', 'black');
+        this.image.append(this.selectedElement);
+
+        break;
+
+      case 'mouseMove':
+        this.x2 = this.coords[0];
+        this.y2 = this.coords[1];
+        const width = this.x2 - this.x1;
+        const height = this.y2 - this.y1;
+        this.selectedElement.setAttribute('height', height.toString());
+        this.selectedElement.setAttribute('width', width.toString());
+        break;
+
+      case 'mouseUp':
+        this.selectedElement = null;
+        break;
+    }
+
+  }
+
+drawPathAction() {
+
+    switch (this.lastMouseEvent) {
+
+      case 'mouseDown':
+        this.selectedElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        this.x1 = this.coords[0];
+        this.y1 = this.coords[1];
+        this.selectedElement.setAttribute('x', this.x1.toString());
+        this.selectedElement.setAttribute('y', this.y1.toString());
+        this.selectedElement.setAttribute('width', '0');
+        this.selectedElement.setAttribute('height', '0');
+        this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
+        this.selectedElement.setAttribute('stroke', 'black');
+        this.image.append(this.selectedElement);
+
+        break;
+
+      case 'mouseMove':
+        this.x2 = this.coords[0];
+        this.y2 = this.coords[1];
+        const width = this.x2 - this.x1;
+        const height = this.y2 - this.y1;
+        this.selectedElement.setAttribute('height', height.toString());
+        this.selectedElement.setAttribute('width', width.toString());
+        break;
+
+      case 'mouseUp':
+        this.selectedElement = null;
+        break;
+    }
+
+  }
+
+  drawPolygonAction() {
+
+    switch (this.lastMouseEvent) {
+
+      case 'mouseDown':
+        this.selectedElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        this.x1 = this.coords[0];
+        this.y1 = this.coords[1];
+        this.selectedElement.setAttribute('x', this.x1.toString());
+        this.selectedElement.setAttribute('y', this.y1.toString());
+        this.selectedElement.setAttribute('width', '0');
+        this.selectedElement.setAttribute('height', '0');
+        this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
+        this.selectedElement.setAttribute('stroke', 'black');
+        this.image.append(this.selectedElement);
+
+        break;
+
+      case 'mouseMove':
+        this.x2 = this.coords[0];
+        this.y2 = this.coords[1];
+        const width = this.x2 - this.x1;
+        const height = this.y2 - this.y1;
+        this.selectedElement.setAttribute('height', height.toString());
+        this.selectedElement.setAttribute('width', width.toString());
+        break;
+
+      case 'mouseUp':
+        this.selectedElement = null;
+        break;
+    }
+
+  }
+
+  drawPolylineAction() {
+
+    switch (this.lastMouseEvent) {
+
+      case 'mouseDown':
+        this.selectedElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        this.x1 = this.coords[0];
+        this.y1 = this.coords[1];
+        this.selectedElement.setAttribute('x', this.x1.toString());
+        this.selectedElement.setAttribute('y', this.y1.toString());
+        this.selectedElement.setAttribute('width', '0');
+        this.selectedElement.setAttribute('height', '0');
+        this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
+        this.selectedElement.setAttribute('stroke', 'black');
+        this.image.append(this.selectedElement);
+
+        break;
+
+      case 'mouseMove':
+        this.x2 = this.coords[0];
+        this.y2 = this.coords[1];
+        const width = this.x2 - this.x1;
+        const height = this.y2 - this.y1;
+        this.selectedElement.setAttribute('height', height.toString());
+        this.selectedElement.setAttribute('width', width.toString());
+        break;
+
+      case 'mouseUp':
+        this.selectedElement = null;
+        break;
+    }
+
+  }
+
+  drawTextAction() {
+
+    if (this.lastMouseEvent === 'mouseDown') {
+        this.selectedElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        this.x1 = this.coords[0];
+        this.y1 = this.coords[1];
+        this.selectedElement.setAttribute('x', this.x1.toString());
+        this.selectedElement.setAttribute('y', this.y1.toString());
+        this.selectedElement.append(document.createTextNode('|'));
+        this.selectedElement.setAttribute('fill', 'black');
+        this.image.append(this.selectedElement);
+        /*@HostListener('keypress', ['$event'])
+            onMouseup(event: MouseEvent) {
+            this.lastMouseEvent = 'mouseUp';
+            this.isMouseDown = false;
+            this.actions(event);
+        }
+    switch(this.){
+
+    }*/
+
+
+      /*case 'mouseUp':
+        this.selectedElement = null;
+        break;*/
+    }
+    }
 
   deleteAction() {
 
