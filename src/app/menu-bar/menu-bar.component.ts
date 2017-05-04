@@ -59,23 +59,4 @@ export class MenuBarComponent implements OnInit {
             
         };
     }
-
-    saveAsPng() {
-        let image = new Image();
-        image.src = 'data:image/svg+xml;base64,' + window.btoa(this.drawArea.getImageComponent().getImage().outerHTML);
-        console.log(this.drawArea.getImageComponent().getImage().innerHTML);
-        image.onload = function() {
-            var canvas = document.createElement('canvas');
-            canvas.width = image.width;
-            canvas.height = image.height;
-            var context = canvas.getContext('2d');
-            context.drawImage(image, 0, 0);
-          
-            var a = document.createElement('a');
-            a.download = "image.png";
-            a.href = canvas.toDataURL('image/png');
-            document.body.appendChild(a);
-            a.click();
-        }
-    }
 }
