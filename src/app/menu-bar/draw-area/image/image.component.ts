@@ -14,11 +14,11 @@ export class ImageComponent {
   constructor(private imageService: ImageService) {
   }
 
-  getImage() {
+  getImage() : SVGElement{
     return this.image.nativeElement;
   }
 
-  append(element: Element) {
+  append (element: Element){
     this.getImage().appendChild(element);
   }
 
@@ -38,5 +38,9 @@ export class ImageComponent {
       }
     }
     return false;
+  }
+
+  newImage(){
+    this.getImage().innerHTML="";
   }
 }

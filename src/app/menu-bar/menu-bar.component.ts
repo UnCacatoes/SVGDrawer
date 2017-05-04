@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { } from 'ng-boostrap';
+import { Component, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
+
+import { DrawAreaComponent } from './draw-area/draw-area.component';
 
 @Component({
   selector: 'app-menu-bar',
@@ -12,9 +13,16 @@ export class MenuBarComponent implements OnInit {
   public lineProperties: { thickness: string };
   public color;
 
+  @ViewChild(DrawAreaComponent)
+  private drawArea: DrawAreaComponent;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  newImage(){
+    this.drawArea.newImage();
   }
 
   save(){

@@ -227,4 +227,8 @@ export class DrawAreaComponent implements OnInit {
         break;
     }
   }
+
+  newImage(){
+    this.image.newImage();
+  }
 }

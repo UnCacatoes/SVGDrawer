@@ -1,4 +1,3 @@
-import { ImageComponent } from './draw-area/image/image.component';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
