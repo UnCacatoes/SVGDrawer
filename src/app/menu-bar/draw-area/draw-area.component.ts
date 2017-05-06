@@ -235,6 +235,7 @@ export class DrawAreaComponent implements OnInit {
     }
 
   }
+  
   drawEllipseAction() {
 
     switch (this.lastMouseEvent) {
@@ -256,8 +257,8 @@ export class DrawAreaComponent implements OnInit {
       case 'mouseMove':
         this.x2 = this.coords[0];
         this.y2 = this.coords[1];
-        const rx = this.x2 - this.x1;
-        const ry = this.y2 - this.y1;
+        const rx = (this.x1 <= this.x2) ? this.x2 - this.x1 : this.x1 - this.x2;
+        const ry = (this.y1 <= this.y2) ? this.y2 - this.y1 : this.y1 - this.y2;
         this.selectedElement.setAttribute('rx', rx.toString());
         this.selectedElement.setAttribute('ry', ry.toString());
         break;
@@ -289,8 +290,18 @@ export class DrawAreaComponent implements OnInit {
       case 'mouseMove':
         this.x2 = this.coords[0];
         this.y2 = this.coords[1];
-        const width = this.x2 - this.x1;
-        const height = this.y2 - this.y1;
+        if (this.x1 <= this.x2){
+          var width = this.x2 - this.x1;
+        } else{
+          var width = this.x1 - this.x2;
+          this.selectedElement.setAttribute('x', this.x2.toString());
+        }
+        if (this.y1 <= this.y2){
+          var height = this.y2 - this.y1;
+        } else{
+          var height = this.y1 - this.y2;
+          this.selectedElement.setAttribute('y', this.y2.toString());
+        }
         this.selectedElement.setAttribute('height', height.toString());
         this.selectedElement.setAttribute('width', width.toString());
         break;
@@ -442,7 +453,7 @@ drawPathAction() {
     }
   }
 
-  newImage(){
+  newImage() {
     this.image.newImage();
   }
 

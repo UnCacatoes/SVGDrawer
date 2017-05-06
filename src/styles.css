@@ -11,7 +11,7 @@ body {
 }
 
 #imageContainer {
-	height: 50em;
+	height: 45em;
     width: auto;
     background-image: url("/assets/grid.png");
     border-color: cadetblue;

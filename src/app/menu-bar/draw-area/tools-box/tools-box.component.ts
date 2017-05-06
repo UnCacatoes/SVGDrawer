@@ -15,7 +15,7 @@ export class ToolsBoxComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTool = 'translate';
-    this.lineProperties = { thickness: '1' };
+    this.lineProperties = { thickness: '10' };
   }
 
   getSelectedTool() {
