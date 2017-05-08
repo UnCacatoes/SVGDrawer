@@ -45,8 +45,6 @@ export class DrawAreaComponent implements OnInit {
     this.updateCoords(event);
     if (this.isMouseDown) {
       this.actions(event);
-    } else {
-      
     }
   }
 
@@ -188,7 +186,7 @@ export class DrawAreaComponent implements OnInit {
         this.selectedElement.setAttribute('x2', this.coords[0].toString());
         this.selectedElement.setAttribute('y2', this.coords[1].toString());
         this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
-        this.selectedElement.setAttribute('stroke', 'black');
+        this.selectedElement.setAttribute('stroke', this.toolsBox.getColor());
         this.image.append(this.selectedElement);
 
         break;
@@ -217,7 +215,7 @@ export class DrawAreaComponent implements OnInit {
         this.selectedElement.setAttribute('cy', this.y1.toString());
         this.selectedElement.setAttribute('r', '0');
         this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
-        this.selectedElement.setAttribute('stroke', 'black');
+        this.selectedElement.setAttribute('stroke', this.toolsBox.getColor());
         this.image.append(this.selectedElement);
 
         break;
@@ -249,7 +247,7 @@ export class DrawAreaComponent implements OnInit {
         this.selectedElement.setAttribute('rx', '0');
         this.selectedElement.setAttribute('ry', '0');
         this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
-        this.selectedElement.setAttribute('stroke', 'black');
+        this.selectedElement.setAttribute('stroke', this.toolsBox.getColor());
         this.image.append(this.selectedElement);
 
         break;
@@ -282,7 +280,7 @@ export class DrawAreaComponent implements OnInit {
         this.selectedElement.setAttribute('width', '0');
         this.selectedElement.setAttribute('height', '0');
         this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
-        this.selectedElement.setAttribute('stroke', 'black');
+        this.selectedElement.setAttribute('stroke', this.toolsBox.getColor());
         this.image.append(this.selectedElement);
 
         break;
@@ -326,7 +324,7 @@ drawPathAction() {
         this.selectedElement.setAttribute('width', '0');
         this.selectedElement.setAttribute('height', '0');
         this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
-        this.selectedElement.setAttribute('stroke', 'black');
+        this.selectedElement.setAttribute('stroke', this.toolsBox.getColor());
         this.image.append(this.selectedElement);
 
         break;
@@ -360,7 +358,7 @@ drawPathAction() {
         this.selectedElement.setAttribute('width', '0');
         this.selectedElement.setAttribute('height', '0');
         this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
-        this.selectedElement.setAttribute('stroke', 'black');
+        this.selectedElement.setAttribute('stroke', this.toolsBox.getColor());
         this.image.append(this.selectedElement);
 
         break;
@@ -394,7 +392,7 @@ drawPathAction() {
         this.selectedElement.setAttribute('width', '0');
         this.selectedElement.setAttribute('height', '0');
         this.selectedElement.setAttribute('stroke-width', this.toolsBox.getLineProperties().thickness);
-        this.selectedElement.setAttribute('stroke', 'black');
+        this.selectedElement.setAttribute('stroke', this.toolsBox.getColor());
         this.image.append(this.selectedElement);
 
         break;
